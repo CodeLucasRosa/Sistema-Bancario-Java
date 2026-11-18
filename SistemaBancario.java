@@ -112,7 +112,6 @@ public class SistemaBancario {
 
                     for (String movimentacao : historico) {
                         System.out.println(movimentacao);
-                        System.out.println("");
                     }
                 }
                 // 4 - Sair
