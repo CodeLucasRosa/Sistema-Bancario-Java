@@ -1,4 +1,4 @@
-/// Sistema Bancario /// | ///Quando iniciar o banco, deve solicitar e armazenar o nome da pessoa/// | ///Permitir que o usuário deposite valores em sua conta/// | ///Permtir que ele faça saques///, ///definir um limite de 1.000,00 reais///, ///aplicar uma taxa de 5% sobre o valor do saque/// | Extrato bancario onde exibi o nome do cliente, o saldo atual e o histórico de todas as movimetações realizadas (depositos e saques) | O sistema deve apresentar um menu de opções em loop, permitindo que o usuário escolha opreação desejada até decidir encerrar o programa.
+/// Sistema Bancario /// | ///Quando iniciar o banco, deve solicitar e armazenar o nome da pessoa/// | ///Permitir que o usuário deposite valores em sua conta/// | ///Permtir que ele faça saques///, ///definir um limite de 1.000,00 reais///, ///aplicar uma taxa de 5% sobre o valor do saque/// | ///Extrato bancario onde exibi o nome do cliente, o saldo atual e o histórico de todas as movimetações realizadas (depositos e saques)/// | ///O sistema deve apresentar um menu de opções em loop, permitindo que o usuário escolha opreação desejada até decidir encerrar o programa.///
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -49,16 +49,13 @@ public class SistemaBancario {
                     System.out.print("Você deseja depositar: R$ ");
                     if (valor.hasNextDouble()) {
                         deposito = valor.nextDouble();
-                        if (deposito < 0.05) {
+                        if (deposito < 0.01) {
                             System.out.println("");
-                            System.out.println("Você tem que depositar um valor maior que R$ 0,05");
-                        }
-                        else if (deposito > 1000) {
-                            System.out.println("");
-                            System.out.println("Você tem um limite de R$ 1.000,00 para deposito");
+                            System.out.println("Você tem que depositar um valor maior que R$ 0,01");
                         }
                         else {
                             saldo = saldo + deposito;
+                            historico.add ("Depósito: + R$ " + deposito);
                             System.out.println("Seu saldo atual é R$ " + saldo);
                         }
                     }
@@ -76,20 +73,22 @@ public class SistemaBancario {
                         saque = valor.nextDouble();
                         double calculotaxa = saque * taxa;
                         double resultadotaxa = saque + calculotaxa;
-                        if (saque > 1000) {
-                            System.out.println("");
-                            System.out.println("Você tem um limite para sacar de R$ 1000,00");
-                            System.out.println("");
-                        }
-                        else if (saque < 0.05) {
+                        if (saque < 0.05) {
                             System.out.println("");
                             System.out.println("Você tem que sacar um valor maior que 0,05");
                             System.out.println("");
                         }
+                        else if (saque > 1000) {
+                            System.out.println("");
+                            System.out.println("Você tem um limite para sacar de R$ 1000,00");
+                            System.out.println("");
+                        }
+                        
                         else if (resultadotaxa <= saldo) {
                             System.out.println("");
                             System.out.println("Tem uma taxa de 5% sobre o saque.");
                             saldo = saldo - resultadotaxa;
+                            historico.add("Saque: - R$" + saque);
                             System.out.println("Você sacou R$ " + saque);
                             System.out.println("Seu saldo agora é R$ " + saldo);
                             System.out.println("");
@@ -107,8 +106,21 @@ public class SistemaBancario {
                 }
                 // 3 - Extrato
                 else if (opcao == 3){
-                    
+                    System.out.println("");
+                    System.out.println("Olá, " + nome + " Veja suas movimentações.");
+                    System.out.println("Seu saldo é R$ " + saldo);
+
+                    for (String movimentacao : historico) {
+                        System.out.println(movimentacao);
+                        System.out.println("");
+                    }
                 }
+                // 4 - Sair
+                else if (opcao == 4) {
+                    System.out.println("Obrigado por utilizar nosso banco");
+                    break;
+                }
+
             }
             // Mensagem de erro caso no MENU seja colocado texto
             else {
